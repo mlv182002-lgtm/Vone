@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vone</title>
+<link id="fav" rel="icon" href="">
+<style>
+:root{--ac:#0d9488;--ac2:#0284c7;--bg:#0e1424;--bar:#151d33;--card:#1a2440;--tx:#e9edf7;--mu:#97a3bd;--bd:#2a3656;--ok:#4ade80;--er:#f87171;--wa:#fbbf24;--g:linear-gradient(135deg,var(--ac),var(--ac2))}
+html[data-mode=light]{--bg:#f3f5f9;--bar:#fff;--card:#fff;--tx:#151a2b;--mu:#5b6682;--bd:#dde2ec;--ok:#15803d;--er:#b91c1c;--wa:#b45309}
+@media(prefers-color-scheme:light){html[data-mode=auto]{--bg:#f3f5f9;--bar:#fff;--card:#fff;--tx:#151a2b;--mu:#5b6682;--bd:#dde2ec;--ok:#15803d;--er:#b91c1c;--wa:#b45309}}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+button,input{font:inherit;color:inherit}
+header{background:var(--bar);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;padding:6px 10px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;letter-spacing:.3px;cursor:pointer;border:0;background:none;padding:2px 6px 2px 0}
+.brand svg{width:30px;height:30px;display:block}
+.brand span{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav button{border:0;background:transparent;color:var(--mu);font-weight:600;padding:8px 12px;border-radius:9px;cursor:pointer;white-space:nowrap}
+nav button:hover{background:var(--card)}nav button.a{background:var(--g);color:#fff}
+.pill{display:flex;align-items:center;gap:6px;color:var(--mu);font-size:12px;cursor:pointer;border:1px solid var(--bd);border-radius:20px;padding:6px 10px;background:transparent;white-space:nowrap}
+.ib{border:1px solid var(--bd);background:transparent;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:16px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--mu)}.dot.on{background:var(--ok)}.dot.err{background:var(--er)}.dot.wa{background:var(--wa)}
+main{flex:1;position:relative;min-height:0}
+.pane{position:absolute;inset:0;display:none;flex-direction:column}.pane.a{display:flex}
+.pane iframe{flex:1;width:100%;border:0;background:#fff}
+.lbar{display:flex;justify-content:space-between;gap:8px;padding:5px 10px;background:var(--bar);border-bottom:1px solid var(--bd);font-size:12px;color:var(--mu)}.lbar a{color:var(--ac)}
+#home{overflow:auto;padding:22px 16px 40px}
+.wrap{max-width:900px;width:100%;margin:0 auto}
+.hero{display:flex;align-items:center;gap:14px;margin-bottom:18px}.hero svg{width:64px;height:64px}
+.hero h1{margin:0;font-size:28px;letter-spacing:.3px}.hero h1 span{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mu{color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;cursor:pointer;position:relative;text-align:left;transition:transform .12s,border-color .12s}
+.card:hover{transform:translateY(-2px);border-color:var(--ac)}
+.ic{width:46px;height:46px;border-radius:13px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:10px}
+.card b{display:block;font-size:15px}.card small{color:var(--mu)}
+.card .gear{position:absolute;top:8px;right:8px;border:0;background:transparent;cursor:pointer;font-size:15px;opacity:.7;border-radius:8px;padding:4px 6px}
+.card.add{border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:128px;color:var(--mu)}
+.card.add .ic{background:transparent;border:2px dashed var(--bd);color:var(--mu)}
+.note{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.note.w{border-left-color:var(--wa)}.note h3{margin:0 0 4px;font-size:14px}.note p{margin:4px 0}
+code{background:var(--bg);padding:1px 6px;border-radius:5px;font-size:12px}
+.btn{border:1px solid var(--bd);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer}
+.btn.p{background:var(--g);color:#fff;border-color:transparent;font-weight:700}.btn.d{color:var(--er)}
+.pop{position:absolute;right:10px;top:54px;z-index:30;width:min(360px,calc(100% - 20px));max-height:calc(100% - 70px);overflow:auto;background:var(--bar);border:1px solid var(--bd);border-radius:14px;padding:14px;box-shadow:0 10px 36px #0006;display:none}
+.pop.o{display:block}.pop h3{margin:0 0 8px;font-size:14px}.pop p{color:var(--mu);font-size:12px;margin:6px 0}
+.pop .btn{display:block;width:100%;margin:6px 0;text-align:left}
+.sw{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
+.sw button{width:38px;height:38px;border-radius:50%;border:3px solid transparent;cursor:pointer;outline:2px solid var(--bd)}.sw button.a{outline:2px solid var(--tx)}
+.seg{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin:6px 0 10px}.seg button{flex:1;border:0;background:transparent;padding:8px;cursor:pointer}.seg button.on{background:var(--g);color:#fff;font-weight:700}
+.md{position:fixed;inset:0;background:#000a;z-index:60;display:flex;align-items:center;justify-content:center;padding:14px}
+.mb{background:var(--bar);border:1px solid var(--bd);border-radius:16px;padding:18px;width:min(440px,100%);max-height:92%;overflow:auto}
+.mb h3{margin:0 0 10px;font-size:17px}.mb label{display:block;font-size:12px;color:var(--mu);margin:10px 0 4px}
+.mb input[type=text],.mb input:not([type]),.mb input[type=file]{width:100%;padding:9px;border-radius:9px;border:1px solid var(--bd);background:var(--bg)}
+.mb .bt{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}.mb p{font-size:12px;color:var(--mu)}
+.mb .ck{display:flex;gap:8px;align-items:flex-start;margin:8px 0;font-size:13px;color:var(--tx)}
+#ts{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#000d;color:#fff;padding:9px 14px;border-radius:10px;font-size:13px;display:none;z-index:90;max-width:90%}
+</style></head><body>
+<header>
+ <button class="brand" id="home-b" title="Home"><span id="lg"></span><span>Vone</span></button>
+ <nav id="nav"></nav>
+ <button class="ib" id="bTheme" title="Colour theme">🎨</button>
+ <button class="pill" id="bSync"><span class="dot" id="dt"></span><span id="st">…</span></button>
+</header>
+<div class="pop" id="pTheme"><h3>Appearance</h3><div class="mu" style="font-size:12px">Colour template</div><div class="sw" id="sw"></div><div class="mu" style="font-size:12px">Mode</div><div class="seg" id="seg"><button data-m="auto">Auto</button><button data-m="light">Light</button><button data-m="dark">Dark</button></div><p>Changes the Vone shell only. Your apps keep their own look.</p></div>
+<div class="pop" id="pSync"></div>
+<main id="mn"><div class="pane a" id="home"></div></main><div id="ts"></div>
+<script>
+const LS=localStorage,$=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10),hhmm=()=>new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+const rj=(k,d)=>{try{const v=JSON.parse(LS.getItem(k));return v??d}catch(e){return d}};
+const toast=(m,ms=3200)=>{const t=$('#ts');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',ms)};
+/* ---------- logo + themes ---------- */
+const THEMES={Ocean:['#0d9488','#0284c7'],Violet:['#7c3aed','#db2777'],Sunset:['#ea580c','#dc2626'],Forest:['#16a34a','#0d9488'],Rose:['#e11d48','#d97706'],Slate:['#475569','#64748b']};
+const logo=(id,a='var(--ac)',b='var(--ac2)')=>`<svg viewBox="0 0 64 64" aria-label="Vone"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:${a}"/><stop offset="1" style="stop-color:${b}"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#${id})"/><path d="M0 0H64V30Q34 30 0 52Z" fill="#fff" opacity=".1"/><path d="M18 25 32 49 46 25" fill="none" stroke="#fff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="14" r="4.6" fill="#fff"/></svg>`;
+let UI={theme:'Ocean',mode:'auto',...rj('vone:ui',{})};
+function applyTheme(){const [a,b]=THEMES[UI.theme]||THEMES.Ocean,r=document.documentElement;r.style.setProperty('--ac',a);r.style.setProperty('--ac2',b);r.dataset.mode=UI.mode;
+ $('#fav').href='data:image/svg+xml,'+encodeURIComponent(logo('f',a,b).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '));
+ $('#sw').innerHTML=Object.entries(THEMES).map(([n,[x,y]])=>`<button title="${n}" data-t="${n}" class="${n===UI.theme?'a':''}" style="background:linear-gradient(135deg,${x},${y})"></button>`).join('');
+ document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.m===UI.mode));LS.setItem('vone:ui',JSON.stringify(UI))}
+$('#lg').innerHTML=logo('lh');$('#lg').style.display='flex';
+$('#sw').onclick=e=>{const t=e.target.dataset.t;if(t){UI.theme=t;applyTheme();render()}};
+$('#seg').onclick=e=>{const m=e.target.dataset.m;if(m){UI.mode=m;applyTheme()}};
+/* ---------- storage: IndexedDB (handles + cached html) ---------- */
+const DB=new Promise((res,rej)=>{try{const q=indexedDB.open('vone',1);q.onupgradeneeded=()=>{q.result.createObjectStore('h');q.result.createObjectStore('html')};q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)}catch(e){rej(e)}});
+const idbp=(st,m,f)=>DB.then(d=>new Promise((res,rej)=>{const t=d.transaction(st,m),r=f(t.objectStore(st));t.oncomplete=()=>res(r&&r.result);t.onerror=()=>rej(t.error)})).catch(()=>null);
+const hGet=k=>idbp('h','readonly',s=>s.get(k)),hPut=(k,v)=>idbp('h','readwrite',s=>s.put(v,k)),
+ xGet=k=>idbp('html','readonly',s=>s.get(k)),xPut=(k,v)=>idbp('html','readwrite',s=>s.put(v,k)),xDel=k=>idbp('html','readwrite',s=>s.delete(k));
+/* ---------- registry ---------- */
+const QUIET={},seen={};
+let REG=rj('vone:apps',{at:0,apps:[]}),META=rj('vone:meta',{}),TAB='home',dirty=new Set(),timer,busy=0,last={};
+const NA='Vone Master App',NB='Vone Master Back up',FSA='showDirectoryPicker' in window;
+let ROOT=null,DA=null,DBK=null,linked=false,needPerm=false;
+const safe=n=>String(n).replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,' ').trim().slice(0,60)||'App';
+const byId=id=>REG.apps.find(a=>a.id===id),pre=id=>'vone:app:'+id+':';
+function uniq(base){let n=base,i=2;const t=()=>REG.apps.some(a=>(a.dir||'').toLowerCase()===n.toLowerCase());while(t())n=base+' '+i++;return n}
+function saveReg(){REG.at=Date.now();LS.setItem('vone:apps',JSON.stringify(REG));mirrorReg()}
+const saveMeta=()=>LS.setItem('vone:meta',JSON.stringify(META));
+/* ---------- disk helpers ---------- */
+async function perm(h,ask){if(!h.queryPermission)return true;let p=await h.queryPermission({mode:'readwrite'});if(p!=='granted'&&ask)p=await h.requestPermission({mode:'readwrite'});return p==='granted'}
+async function mount(h){ROOT=h;DA=await h.getDirectoryHandle(NA,{create:true});DBK=await h.getDirectoryHandle(NB,{create:true});linked=true;needPerm=false}
+async function wfile(dir,name,data){const w=await(await dir.getFileHandle(name,{create:true})).createWritable();await w.write(data);await w.close()}
+async function rfile(dir,name){try{return await(await dir.getFileHandle(name)).getFile()}catch(e){return null}}
+const mirrorReg=()=>{if(linked)wfile(DA,'_vone-apps.json',JSON.stringify(REG,null,1)).catch(()=>{})};
+async function linkFolder(){try{const h=await showDirectoryPicker({mode:'readwrite',id:'vone-master'});await hPut('root',h);await mount(h);for(const a of htmlApps()){if(!(await rfile(DA,a.file))){const c=await xGet(a.id);if(c)await toDisk(a,c.html)}await bdir(a)}await bootDisk(true);mirrorReg();render();setStatus();toast('Master folder linked ✓')}catch(e){if(e.name!=='AbortError')toast('Could not link folder: '+e.name)}}
+/* ---------- app data (isolated per app via prefix) ---------- */
+const SKIP=/(^|[_:.-])(pin|passcode|password|pwd)([_:.-]|$)/i; // secret keys stay on this device, never written to backup files
+const grab=id=>{const p=pre(id),o={};for(let i=0;i<LS.length;i++){const k=LS.key(i);if(k.startsWith(p)&&!SKIP.test(k.slice(p.length)))o[k.slice(p.length)]=LS.getItem(k)}return o};
+function apply(id,d,at){const p=pre(id);[...Array(LS.length).keys()].map(i=>LS.key(i)).filter(k=>k.startsWith(p)&&!SKIP.test(k.slice(p.length))).forEach(k=>LS.removeItem(k));Object.entries(d||{}).forEach(([k,v])=>{if(!SKIP.test(k))LS.setItem(p+k,v)});META[id]={at:at||Date.now(),sig:JSON.stringify(grab(id))};QUIET[id]=Date.now()+3000;saveMeta()}
+const htmlApps=()=>REG.apps.filter(a=>a.kind==='html');
+async function bdir(a){return DBK.getDirectoryHandle(a.dir,{create:true})}
+async function pushToDisk(a){if(!linked||!META[a.id])return;const d=await bdir(a),body=JSON.stringify({v:1,app:a.name,id:a.id,at:META[a.id].at,data:grab(a.id)});
+ await wfile(d,'data.json',body);const day=new Date().toISOString().slice(0,10),sn='data-'+day+'.json';
+ if(!(await rfile(d,sn))){await wfile(d,sn,body);const names=[];for await(const [n] of d.entries())if(/^data-\d{4}-\d\d-\d\d\.json$/.test(n))names.push(n);names.sort().slice(0,-7).forEach(n=>d.removeEntry(n).catch(()=>{}))}
+ last[a.id]=hhmm()}
+async function pushAll(){if(!linked)return;if(busy){return queue()}busy=1;const ids=[...dirty];dirty.clear();
+ try{for(const id of ids){const a=byId(id);if(a&&a.kind==='html')await pushToDisk(a)}setStatus('Synced '+hhmm(),'on');render()}catch(e){ids.forEach(i=>dirty.add(i));needPerm=true;setStatus('Sync failed — open ☰ and reconnect','err')}busy=0}
+function queue(){if(!linked)return setStatus();clearTimeout(timer);setStatus('Changes pending…','wa');timer=setTimeout(pushAll,250)}
+function scan(){let ch=false;htmlApps().forEach(a=>{const sig=JSON.stringify(grab(a.id));if((QUIET[a.id]||0)>Date.now()){if(META[a.id])META[a.id].sig=sig;return}if(!META[a.id]&&sig==='{}')return;if(!META[a.id]||META[a.id].sig!==sig){META[a.id]={at:Date.now(),sig};dirty.add(a.id);ch=true}});if(ch){saveMeta();queue()}}
+async function pullApp(a,initial){const d=await bdir(a),f=await rfile(d,'data.json');let F=null;if(f){try{F=JSON.parse(await f.text())}catch(e){}}
+ const fa=F&&F.data&&Object.keys(F.data).length?F:null,local=grab(a.id),has=Object.keys(local).length>0,m=META[a.id];
+ if(fa&&fa.at>(m?.at||0)){
+  if(has&&!m){if(!confirm(a.name+': this browser already has data AND the backup folder has data.\n\nOK = use the backup folder (a copy of the browser data is downloaded first)\nCancel = keep browser data and overwrite the folder')){META[a.id]={at:Date.now(),sig:''};saveMeta();dirty.add(a.id);return}dl(`vone-${safe(a.name)}-before-restore.json`,{data:local})}
+  apply(a.id,fa.data,fa.at);if(!initial){reloadApp(a.id);toast(a.name+' updated from backup folder')}
+ }else if(has&&(!fa||!m||m.at>fa.at))dirty.add(a.id)}
+async function bootDisk(initial){ // adopt registry + files from the master folders
+ const f=await rfile(DA,'_vone-apps.json');if(f){try{const D=JSON.parse(await f.text());if(D.at>REG.at&&Array.isArray(D.apps)){REG=D;LS.setItem('vone:apps',JSON.stringify(REG))}}catch(e){}}
+ const known=new Set(htmlApps().map(a=>(a.file||'').toLowerCase()));
+ for await(const [n,h] of DA.entries())if(h.kind==='file'&&/\.html?$/i.test(n)&&!n.startsWith('_')&&!known.has(n.toLowerCase())){const nm=n.replace(/\.html?$/i,'');const na={id:uid(),kind:'html',name:nm,icon:'',file:n,dir:uniq(safe(nm))};REG.apps.push(na);LS.setItem('vone:apps',JSON.stringify(REG));try{const raw=await(await DA.getFileHandle(n)).getFile().then(f=>f.text());await toDisk(na,raw);await xPut(na.id,{html:strip(raw),mt:Date.now()});await bdir(na)}catch(e){}}
+ for(const a of htmlApps()){let df=await rfile(DA,a.file);const c=await xGet(a.id);if(df){const tx=await df.text();
+  if(!tx.includes(AGENT_V)){await toDisk(a,tx);df=await rfile(DA,a.file);await xPut(a.id,{html:strip(tx),mt:df.lastModified});if(!initial&&c)reloadApp(a.id)}
+  else if(!c||df.lastModified>c.mt){await xPut(a.id,{html:strip(tx),mt:df.lastModified});if(!initial&&c)reloadApp(a.id)}}
+  try{await pullApp(a,initial)}catch(e){}}
+ saveMeta();scan();if(dirty.size)await pushAll();else setStatus('Synced '+hhmm(),'on')}
+function dl(n,o){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}));a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+async function pollData(){if(!linked||busy)return;for(const a of htmlApps()){try{const d=await DBK.getDirectoryHandle(a.dir),f=await rfile(d,'data.json');if(!f||seen[a.id]===f.lastModified)continue;seen[a.id]=f.lastModified;await pullApp(a,false)}catch(e){}}if(dirty.size)queue()}
+/* ---------- iframe host ---------- */
+function shim(id){return `<script>(function(){var P=${JSON.stringify(pre(id))},R=window.localStorage;function H(){try{parent.__vch&&parent.__vch()}catch(e){}}function ks(){var a=[];for(var i=0;i<R.length;i++){var k=R.key(i);if(k.indexOf(P)===0)a.push(k.slice(P.length))}return a}
+var api={getItem:function(k){return R.getItem(P+k)},setItem:function(k,v){R.setItem(P+k,String(v));H()},removeItem:function(k){R.removeItem(P+k);H()},clear:function(){ks().forEach(function(k){R.removeItem(P+k)});H()},key:function(i){var a=ks();return i<a.length?a[i]:null}};
+var px=new Proxy(api,{get:function(t,k){if(k==='length')return ks().length;if(k in t)return t[k];if(typeof k==='string'){var v=R.getItem(P+k);return v===null?undefined:v}},set:function(t,k,v){R.setItem(P+k,String(v));H();return true},deleteProperty:function(t,k){R.removeItem(P+k);H();return true},has:function(t,k){return k in t||R.getItem(P+k)!==null}});
+try{Object.defineProperty(window,'localStorage',{configurable:true,get:function(){return px}})}catch(e){}
+try{var DH=Object.getOwnPropertyDescriptor(Document.prototype,'hidden'),DV=Object.getOwnPropertyDescriptor(Document.prototype,'visibilityState');window.__vh=false;Object.defineProperty(document,'hidden',{configurable:true,get:function(){return window.__vh||DH.get.call(document)}});Object.defineProperty(document,'visibilityState',{configurable:true,get:function(){return window.__vh?'hidden':DV.get.call(document)}})}catch(e){}})();<\/script>`}
+function ins(html,s){for(const re of[/<head[^>]*>/i,/<html[^>]*>/i,/<!doctype[^>]*>/i]){const m=html.match(re);if(m)return html.slice(0,m.index+m[0].length)+s+html.slice(m.index+m[0].length)}return s+html}
+const inject=(html,id)=>ins(strip(html),shim(id));
+const AG_A='<!'+'--VONE-AGENT--'+'>',AG_B='<!'+'--/VONE-AGENT--'+'>';
+const AGRE=new RegExp(AG_A+'[\\s\\S]*?'+AG_B,'g'),strip=h=>h.replace(AGRE,'');
+const AGENT_V='vone-agent-v3';
+const agentJs=a=>`/*${AGENT_V}*/(function(A){if(window.top!==window)return;var ID=A[0],DIR=A[1],NAME=A[2],P='vone:app:'+ID+':',R=window.localStorage,K='vone:agent:'+ID,BK=${JSON.stringify(NB)},ht;function H(){clearTimeout(ht);ht=setTimeout(function(){tick()},120)}
+function ks(){var a=[];for(var i=0;i<R.length;i++){var k=R.key(i);if(k.indexOf(P)===0)a.push(k.slice(P.length))}return a}
+var api={getItem:function(k){return R.getItem(P+k)},setItem:function(k,v){R.setItem(P+k,String(v));H()},removeItem:function(k){R.removeItem(P+k);H()},clear:function(){ks().forEach(function(k){R.removeItem(P+k)});H()},key:function(i){var a=ks();return i<a.length?a[i]:null}};
+var px=new Proxy(api,{get:function(t,k){if(k==='length')return ks().length;if(k in t)return t[k];if(typeof k==='string'){var v=R.getItem(P+k);return v===null?undefined:v}},set:function(t,k,v){R.setItem(P+k,String(v));H();return true},deleteProperty:function(t,k){R.removeItem(P+k);H();return true},has:function(t,k){return k in t||R.getItem(P+k)!==null}});
+try{Object.defineProperty(window,'localStorage',{configurable:true,get:function(){return px}})}catch(e){}
+var SK=/(^|[_:.-])(pin|passcode|password|pwd)([_:.-]|$)/i,meta={},d=null,el=null,run=0;try{meta=JSON.parse(R.getItem(K)||'{}')}catch(e){}
+function sv(){R.setItem(K,JSON.stringify(meta))}
+function grab(){var o={};ks().forEach(function(k){if(!SK.test(k))o[k]=R.getItem(P+k)});return o}
+function say(t,c){if(el){el.textContent='\\uD83E\\uDDED Vone sync: '+t;el.style.borderColor=c||'#888'}}
+function idb(){return new Promise(function(res,rej){var q=indexedDB.open('vone-agent',1);q.onupgradeneeded=function(){q.result.createObjectStore('h')};q.onsuccess=function(){res(q.result)};q.onerror=function(){rej()}})}
+async function hget(){try{var db=await idb();return await new Promise(function(r){var q=db.transaction('h').objectStore('h').get(ID);q.onsuccess=function(){r(q.result)};q.onerror=function(){r(null)}})}catch(e){return null}}
+async function hput(h){try{var db=await idb();db.transaction('h','readwrite').objectStore('h').put(h,ID)}catch(e){}}
+async function readF(){try{var f=await(await d.getFileHandle('data.json')).getFile();return JSON.parse(await f.text())}catch(e){return null}}
+async function writeF(){var w=await(await d.getFileHandle('data.json',{create:true})).createWritable();await w.write(JSON.stringify({v:1,app:NAME,id:ID,at:meta.at,data:grab()}));await w.close()}
+function applyF(F){ks().forEach(function(k){if(!SK.test(k))R.removeItem(P+k)});Object.keys(F.data).forEach(function(k){if(!SK.test(k))R.setItem(P+k,F.data[k])});meta={at:F.at,sig:JSON.stringify(grab()),q:Date.now()+3000};sv()}
+async function tick(){if(!d)return;try{var F=await readF(),has=F&&F.data&&Object.keys(F.data).length,sig=JSON.stringify(grab());
+ if(meta.at===undefined){if(has){applyF(F);return location.reload()}meta={at:0,sig:''}}
+ if(meta.q&&Date.now()<meta.q){if(meta.sig!==sig){meta.sig=sig;sv()}return}
+ if(meta.sig!==sig){meta.at=Date.now();meta.sig=sig;sv();await writeF();say('synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),'#16a34a');return}
+ if(has&&F.at>(meta.at||0)){applyF(F);location.reload()}}catch(e){say('click to reconnect','#dc2626');d=null;el.onclick=boot}}
+function loop(){say('synced','#16a34a');tick();if(!run)run=setInterval(tick,1000)}
+async function connect(){try{var root=await showDirectoryPicker({mode:'readwrite'}),x=root;if(root.name===BK)x=await root.getDirectoryHandle(DIR,{create:true});else if(root.name!==DIR){var b=await root.getDirectoryHandle(BK);x=await b.getDirectoryHandle(DIR,{create:true})}d=x;await hput(d);loop()}catch(e){say(e.name==='NotFoundError'?'pick the Vone master folder':'not connected','#dc2626')}}
+async function boot(){if(!('showDirectoryPicker' in window)){say('folder access is not available in this browser','#d97706');return}
+ d=await hget();if(d&&d.getFileHandle){var p=d.queryPermission?await d.queryPermission({mode:'readwrite'}):'granted';if(p==='granted')return loop();say('click to reconnect','#d97706');el.onclick=async function(){if(!d.requestPermission||await d.requestPermission({mode:'readwrite'})==='granted')loop()};return}
+ d=null;say('click to connect to the Vone folder','#d97706');el.onclick=connect}
+function ui(){el=document.createElement('div');el.style.cssText='position:fixed;left:10px;bottom:10px;z-index:2147483647;font:12px system-ui,sans-serif;background:#fff;color:#222;border:2px solid #888;border-radius:20px;padding:5px 11px;cursor:pointer;box-shadow:0 2px 10px #0004;opacity:.92';el.title='Keeps this page in sync with Vone through the shared backup folder';document.body.appendChild(el);boot()}
+if(document.body)ui();else document.addEventListener('DOMContentLoaded',ui)})(${JSON.stringify([a.id,a.dir,a.name])});`;
+const withAgent=(html,a)=>ins(strip(html),AG_A+'<script>'+agentJs(a)+'<\/script>'+AG_B);
+const toDisk=async(a,html)=>{await wfile(DA,a.file,withAgent(html,a))};
+
+async function getHtml(a){let c=await xGet(a.id);if(!c&&linked){const f=await rfile(DA,a.file);if(f){c={html:strip(await f.text()),mt:f.lastModified};await xPut(a.id,c)}}return c&&c.html}
+function reloadApp(id){const p=document.getElementById('p_'+id);if(p){p.remove();if(TAB===id)openApp(id)}}
+function setVis(id,v){try{const w=document.querySelector('#p_'+id+' iframe').contentWindow;w.__vh=!v;w.document.dispatchEvent(new w.Event('visibilitychange'))}catch(e){}}
+async function openApp(id){const prev=TAB;if(prev!==id&&prev!=='home')setVis(prev,false);TAB=id;document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('a',b.dataset.i===id));document.querySelectorAll('.pane').forEach(p=>p.classList.remove('a'));
+ if(id==='home'){$('#home').classList.add('a');return}const a=byId(id);if(!a)return openApp('home');let p=document.getElementById('p_'+id);const existed=!!p;
+ if(!p){p=document.createElement('div');p.className='pane';p.id='p_'+id;
+  if(a.kind==='link'){p.innerHTML=`<div class="lbar"><span>${esc(a.url)} — the app must be running at this address</span><a href="${esc(a.url)}" target="_blank" rel="noopener">Open in new tab ↗</a></div><iframe src="${esc(a.url)}"></iframe>`}
+  else{const h=await getHtml(a);if(!h){toast('App file missing — use ⚙ → Replace HTML');return openApp('home')}p.innerHTML='<iframe></iframe>';p.firstChild.srcdoc=inject(h,id)}
+  $('#mn').appendChild(p)}
+ p.classList.add('a');if(existed&&prev!==id)setVis(id,true)}
+/* ---------- UI render ---------- */
+function setStatus(m,k){const st=$('#st'),dt=$('#dt');if(m){st.textContent=m;dt.className='dot '+(k||'');return}
+ if(!FSA){st.textContent='Manual backup';dt.className='dot wa'}else if(needPerm){st.textContent='Reconnect folder';dt.className='dot err'}else if(!linked){st.textContent='Link master folder';dt.className='dot wa'}else{st.textContent='Folder linked';dt.className='dot on'}}
+function render(){
+ $('#nav').innerHTML=`<button data-i="home">🏠 Home</button>`+REG.apps.map(a=>`<button data-i="${a.id}">${esc(a.icon||'')} ${esc(a.name)}</button>`).join('');
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('a',b.dataset.i===TAB));
+ const ic=a=>a.icon?esc(a.icon):esc(a.name[0].toUpperCase());
+ let note='';
+ if(!FSA)note=`<div class="note w"><h3>Folder backup isn't available in this browser</h3><p>Firefox has no folder API, and some Chromium browsers (Brave, possibly Ulaa) switch it off. Check the flags page for “File System Access”. Until then your apps are saved in the browser only — use <b>Export / Import</b> in the sync menu to back up.</p></div>`;
+ else if(!linked)note=`<div class="note"><h3>Step 1 — choose your Vone master folder</h3><p>Pick any folder. Vone creates <code>${NA}</code> (your app files) and <code>${NB}</code> (one backup folder per app) inside it. If you already created these two folders, pick the folder that contains them.</p><button class="btn p" id="nLink">${needPerm?'Reconnect folder':'Choose master folder'}</button></div>`;
+ $('#home').innerHTML=`<div class="wrap"><div class="hero">${logo('lb')}<div><h1><span>Vone</span></h1><div class="mu">All your apps, one roof.</div></div></div>${note}
+ <div class="grid">${REG.apps.map(a=>`<div class="card" data-o="${a.id}"><button class="gear" data-g="${a.id}" title="Manage">⚙</button>${a.kind==='html'?`<button class="gear" data-w="${a.id}" style="right:36px" title="Open in its own tab (stays in sync with Vone)">↗</button>`:''}<div class="ic">${ic(a)}</div><b>${esc(a.name)}</b><small>${a.kind==='link'?'Web link':last[a.id]?'Backed up '+last[a.id]:linked?'Backup folder ready':'Stored in browser'}</small></div>`).join('')}
+ <div class="card add" id="cAdd"><div class="ic">＋</div><b>Add app</b></div></div></div>`;
+ const n=$('#nLink');if(n)n.onclick=()=>needPerm?reconnect():linkFolder()}
+$('#nav').onclick=e=>{const i=e.target.closest('button')?.dataset.i;if(i)openApp(i)};
+$('#home-b').onclick=()=>openApp('home');
+$('#home').onclick=e=>{const w=e.target.closest('[data-w]');if(w)return openOwn(byId(w.dataset.w));const g=e.target.closest('[data-g]');if(g)return manage(g.dataset.g);const o=e.target.closest('[data-o]');if(o)return openApp(o.dataset.o);if(e.target.closest('#cAdd'))addDialog()};
+const pops=['#pTheme','#pSync'];const closePops=()=>pops.forEach(p=>$(p).classList.remove('o'));
+$('#bTheme').onclick=e=>{e.stopPropagation();const o=$('#pTheme').classList.contains('o');closePops();if(!o)$('#pTheme').classList.add('o')};
+$('#bSync').onclick=e=>{e.stopPropagation();const o=$('#pSync').classList.contains('o');closePops();if(!o){syncPanel();$('#pSync').classList.add('o')}};
+document.addEventListener('click',e=>{if(!e.composedPath().some(n=>n.classList&&n.classList.contains('pop')))closePops()});
+async function reconnect(){if(ROOT&&await perm(ROOT,true)){try{await mount(ROOT);await bootDisk(false);render();toast('Reconnected ✓')}catch(e){toast('Reconnect failed')}}else linkFolder()}
+const UA=navigator.userAgent,BR=/Firefox/.test(UA)?'Firefox':/Edg\//.test(UA)?'Edge':/Ulaa/i.test(UA)?'Ulaa':/Chrome/.test(UA)?'Chromium-based browser':'this browser';
+function syncPanel(){$('#pSync').innerHTML=`<h3>Master folder &amp; backup</h3><p>Folder access in ${BR}: <b style="color:var(--${FSA?'ok':'er'})">${FSA?'available ✓':'not available ✗'}</b>${FSA?'':BR==='Firefox'?'<br>Firefox cannot write to folders from a web page. Use Export / Import below, or a Chromium browser.':'<br>This browser has the folder feature switched off. Look for “File System Access” on its flags page, or use Export / Import below.'}</p><p>${linked?`Linked: <b>${esc(ROOT.name)}</b><br>📁 ${NA} — app files<br>📁 ${NB} — a folder per app`:'Not linked yet.'}</p>
+ ${FSA?`<button class="btn p" id="s1">${linked?'Change master folder…':needPerm?'Reconnect folder':'Choose master folder…'}</button>${linked?'<button class="btn" id="s2">⟳ Back up everything now</button>':''}${needPerm?'<button class="btn" id="s5">🔓 Reconnect</button>':''}`:'<p><b>Folder access not available here.</b></p>'}
+ <button class="btn" id="s3">⬇ Export all apps + data (one file)</button><button class="btn" id="s4">📂 Import an export…</button><input type="file" id="sf" accept=".json" hidden>
+ <p><b>Standalone copy:</b> on the Home screen, press <b>↗</b> on an app card to open it in its own tab, already connected to its backup folder.</p><p>Add or remove an app in Vone and its file and backup folder are added to / removed from the master folders too.</p>`;
+ const q=x=>$('#pSync '+x);if(q('#s1'))q('#s1').onclick=()=>needPerm?reconnect():linkFolder();if(q('#s5'))q('#s5').onclick=reconnect;if(q('#s2'))q('#s2').onclick=async()=>{scan();htmlApps().forEach(a=>{if(META[a.id])dirty.add(a.id)});await pushAll();closePops()};
+ q('#s3').onclick=exportAll;q('#s4').onclick=()=>q('#sf').click();q('#sf').onchange=importAll}
+async function exportAll(){scan();const o={v:1,app:'vone',apps:[]};for(const a of REG.apps){const e={...a};if(a.kind==='html'){e.html=await getHtml(a);e.data=grab(a.id)}o.apps.push(e)}dl('vone-export.json',o);toast('Exported ✓')}
+async function importAll(e){const f=e.target.files[0];e.target.value='';if(!f)return;try{const o=JSON.parse(await f.text());if(!Array.isArray(o.apps))throw 0;if(!confirm(`Import ${o.apps.length} app(s)? Apps with the same name are replaced.`))return;
+ for(const x of o.apps){const old=REG.apps.find(a=>a.name===x.name);if(old)await removeApp(old,{disk:false,final:false,quiet:true});const a={id:uid(),kind:x.kind,name:x.name,icon:x.icon||''};
+  if(x.kind==='link')a.url=x.url;else{a.dir=uniq(safe(x.name));a.file=a.dir+'.html';if(linked){await toDisk(a,x.html||'');await bdir(a);dirty.add(a.id)}await xPut(a.id,{html:strip(x.html||''),mt:Date.now()});apply(a.id,x.data||{})}REG.apps.push(a)}
+ saveReg();render();if(dirty.size)queue();toast('Imported ✓')}catch(x){toast('Not a valid Vone export')}}
+async function openOwn(a){if(!a)return;const h=await getHtml(a);if(!h)return toast('App file missing');
+ if(linked){try{const d=await bdir(a),db=await new Promise((res,rej)=>{const q=indexedDB.open('vone-agent',1);q.onupgradeneeded=()=>q.result.createObjectStore('h');q.onsuccess=()=>res(q.result);q.onerror=rej});await new Promise(res=>{const t=db.transaction('h','readwrite');t.objectStore('h').put(d,a.id);t.oncomplete=res;t.onerror=res})}catch(e){}}
+ const w=window.open('','_blank');if(!w)return toast('Pop-up blocked — allow pop-ups for this page');
+ w.document.open();w.document.write(withAgent(h,a));w.document.close();w.document.title=a.name}
+/* ---------- add / manage / remove ---------- */
+function modal(inner){const m=document.createElement('div');m.className='md';m.innerHTML=`<div class="mb">${inner}</div>`;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
+function addDialog(){let kind='html',file=null;const m=modal(`<h3>Add an app</h3><div class="seg" id="ak"><button data-k="html" class="on">HTML file</button><button data-k="link">Web link</button></div>
+ <div id="kh"><label>Upload the app's .html file</label><input type="file" id="af" accept=".html,.htm,text/html"></div>
+ <div id="kl" hidden><label>Address (e.g. your Reminder Bot)</label><input id="au" placeholder="http://localhost:8765"></div>
+ <label>Name</label><input id="an" placeholder="e.g. FitVijay"><label>Icon (emoji, optional)</label><input id="ai" maxlength="2" placeholder="💪">
+ <p id="ah"></p><div class="bt"><button class="btn" id="ax">Cancel</button><button class="btn p" id="ao">Add app</button></div>`);
+ const q=s=>m.querySelector(s),hint=()=>{q('#ah').textContent=kind==='link'?'Opens inside Vone. A link has no file or backup folder here — the app keeps its own data.':linked?`Saved to “${NA}/${safe(q('#an').value||'name')}.html” and a folder “${NB}/${safe(q('#an').value||'name')}” is created for its backup.`:'Saved in this browser. Link the master folder to also store it on disk.'};hint();
+ q('#ak').onclick=e=>{const k=e.target.dataset.k;if(!k)return;kind=k;q('#ak').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));q('#kh').hidden=k!=='html';q('#kl').hidden=k!=='link';hint()};
+ q('#af').onchange=async e=>{file=e.target.files[0];if(!file)return;const t=await file.text(),mm=t.match(/<title[^>]*>([^<]*)<\/title>/i);if(!q('#an').value)q('#an').value=(mm&&mm[1].trim())||file.name.replace(/\.html?$/i,'');hint()};q('#an').oninput=hint;
+ q('#ax').onclick=()=>m.remove();
+ q('#ao').onclick=async()=>{const name=q('#an').value.trim();if(!name)return toast('Enter a name');const icon=q('#ai').value.trim();
+  try{const a={id:uid(),kind,name,icon};
+   if(kind==='link'){let u=q('#au').value.trim();if(!/^https?:\/\//i.test(u))return toast('Enter an address starting with http://');a.url=u}
+   else{if(!file)return toast('Choose an .html file');a.dir=uniq(safe(name));a.file=a.dir+'.html';const html=await file.text();if(linked){await toDisk(a,html);await bdir(a)}await xPut(a.id,{html:strip(html),mt:Date.now()})}
+   REG.apps.push(a);saveReg();m.remove();render();openApp(a.id);toast(name+' added ✓')}catch(e){toast('Could not add app: '+(e.message||e))}}}
+function manage(id){const a=byId(id);if(!a)return;const m=modal(`<h3>${esc(a.icon)} ${esc(a.name)}</h3><p>${a.kind==='link'?esc(a.url):linked?`📄 ${NA}/${esc(a.file)}<br>📁 ${NB}/${esc(a.dir)}`:'Stored in this browser only.'}</p>${a.kind==='html'&&linked?`<p>Opening <code>${esc(a.file)}</code> straight from the folder also works: click the <b>🧭 Vone sync</b> pill at the bottom-left of <i>that</i> page (not in Vone) and pick the master folder once.</p>`:''}
+ ${a.kind==='html'?`<button class="btn p" id="mo">↗ Open in its own tab (live sync with Vone)</button><button class="btn" id="mr">📄 Replace HTML file…</button>${linked?'<button class="btn" id="mb">⟳ Back up now</button><button class="btn" id="mt">⟲ Restore from backup folder</button>':''}<input type="file" id="mf" accept=".html,.htm" hidden>`:''}
+ <button class="btn d" id="md">🗑 Remove app…</button><div class="bt"><button class="btn" id="mx">Close</button></div>`);const q=s=>m.querySelector(s);
+ q('#mx').onclick=()=>m.remove();
+ if(a.kind==='html'){q('#mo').onclick=()=>{m.remove();openOwn(a)};q('#mr').onclick=()=>q('#mf').click();q('#mf').onchange=async e=>{const f=e.target.files[0];if(!f)return;const html=await f.text();if(linked)await toDisk(a,html);await xPut(a.id,{html:strip(html),mt:Date.now()});reloadApp(a.id);m.remove();toast('HTML replaced ✓')};
+  if(linked){q('#mb').onclick=async()=>{scan();dirty.add(a.id);await pushAll();m.remove()};q('#mt').onclick=async()=>{if(!confirm('Replace '+a.name+"'s current data with the backup folder copy?"))return;const f=await rfile(await bdir(a),'data.json');if(!f)return toast('No backup yet');try{const F=JSON.parse(await f.text());apply(a.id,F.data,F.at);reloadApp(a.id);m.remove();toast('Restored ✓')}catch(e){toast('Backup file unreadable')}}}}
+ q('#md').onclick=()=>{m.remove();removeDialog(a)}}
+function removeDialog(a){const m=modal(`<h3>Remove ${esc(a.name)}?</h3><p>This removes the app from Vone.</p>${a.kind==='html'?`<label class="ck"><input type="checkbox" id="rd" ${linked?'checked':'disabled'}><span>Also delete <code>${NA}/${esc(a.file)}</code> and the whole backup folder <code>${NB}/${esc(a.dir)}</code> from my computer</span></label><label class="ck"><input type="checkbox" id="rf" checked><span>Download a last copy of its data first</span></label>`:''}<div class="bt"><button class="btn" id="rx">Cancel</button><button class="btn p" id="ro" style="background:var(--er)">Remove</button></div>`);
+ m.querySelector('#rx').onclick=()=>m.remove();m.querySelector('#ro').onclick=async()=>{const disk=!!m.querySelector('#rd')?.checked,fin=!!m.querySelector('#rf')?.checked;m.remove();await removeApp(a,{disk,final:fin})}}
+async function removeApp(a,{disk,final,quiet}){try{
+ if(a.kind==='html'){if(final){scan();dl(`vone-${safe(a.name)}-final-backup.json`,{app:a.name,html:await getHtml(a),data:grab(a.id)})}
+  if(disk&&linked){await DA.removeEntry(a.file).catch(()=>{});await DBK.removeEntry(a.dir,{recursive:true}).catch(()=>{})}
+  const p=pre(a.id);[...Array(LS.length).keys()].map(i=>LS.key(i)).filter(k=>k.startsWith(p)).forEach(k=>LS.removeItem(k));await xDel(a.id);delete META[a.id];saveMeta();dirty.delete(a.id)}
+ document.getElementById('p_'+a.id)?.remove();REG.apps=REG.apps.filter(x=>x.id!==a.id);saveReg();if(TAB===a.id)TAB='home';render();openApp(TAB);if(!quiet)toast(a.name+' removed')}catch(e){toast('Remove failed: '+(e.message||e))}}
+/* ---------- boot ---------- */
+(async()=>{applyTheme();render();setStatus();
+ if(FSA){const h=await hGet('root');if(h){ROOT=h;try{if(await perm(h,false)){await mount(h);await bootDisk(true)}else needPerm=true}catch(e){needPerm=true}}}
+ setStatus();render();const t=LS.getItem('vone:tab');if(t&&byId(t))openApp(t);
+ window.addEventListener('storage',scan);setInterval(scan,3000);setInterval(pollData,1000);window.__vch=()=>{clearTimeout(window.__vt);window.__vt=setTimeout(scan,40)};setInterval(()=>{if(linked&&!busy&&!document.hidden)bootDisk(false).catch(()=>{})},60000);
+ const _o=open;window.addEventListener('beforeunload',()=>LS.setItem('vone:tab',TAB))})();
+</script></body></html>
